@@ -1,0 +1,13 @@
+module clock_divider(clock_in, clock_out);
+  input clock_in;
+  output reg clock_out;
+  reg[25:0] counter=26'd0;
+  parameter DIVISOR = 26'd50000000;
+  always @(posedge clock_in) 
+    begin
+      counter <= counter + 1;
+      if(counter==(DIVISOR-1))
+        counter <= 0;
+      clock_out <= (counter<DIVISOR/2)?1'b1 : 1'b0;
+    end
+endmodule
