@@ -1,0 +1,45 @@
+module tb_simple_fsm;
+
+    reg clk;
+    reg reset;
+    reg button;
+    wire led;
+
+   
+    simple_fsm uut (
+        .clk(clk),
+        .reset(reset),
+        .button(button),
+        .led(led)
+    );
+
+    
+    always #5 clk = ~clk;
+
+    initial begin
+        $dumpfile("fsm_toggle.vcd");
+        $dumpvars(0, tb_simple_fsm);
+
+        
+        clk = 0;
+        reset = 1;
+        button = 0;
+        #20;
+
+        reset = 0;
+        #10;
+
+     
+        button = 1; #10;  // press
+        button = 0; #20;
+
+        button = 1; #10;  // press again
+        button = 0; #20;
+
+        button = 1; #10;  // press again
+        button = 0; #20;
+
+        $finish;
+    end
+
+endmodule
